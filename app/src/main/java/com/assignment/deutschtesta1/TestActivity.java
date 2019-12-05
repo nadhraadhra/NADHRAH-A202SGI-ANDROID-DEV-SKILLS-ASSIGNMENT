@@ -2,6 +2,7 @@ package com.assignment.deutschtesta1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,10 +13,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.security.PublicKey;
 import java.util.Collections;
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
+    public static final String ADDITIONAL_SCORE = "additionalScore";
+
     private TextView textViewQuestion;
     private TextView textViewScoreTest;
     private TextView textViewQuestionCount;
@@ -150,6 +154,9 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void finishTest() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(ADDITIONAL_SCORE, score);
+        setResult(RESULT_OK, resultIntent);
         finish();
     }
 }
