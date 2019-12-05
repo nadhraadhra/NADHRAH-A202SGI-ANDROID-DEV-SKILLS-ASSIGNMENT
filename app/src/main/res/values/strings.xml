@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">DeutschTestA1</string>
+
+    <string name="MainTitle">Deutsch Test A1</string>
+    <string name="HighcsoreView">Highscore: 0</string>
+    <string name="scoreView">Score: 0</string>
+    <string name="QuestionTotal">Questions: 1/x</string>
+    <string name="timerLabel"> 00:30 </string>
+    <string name="Question">Question test</string>
+
+    <string name="startButton">Start Test</string>
+
+    <string name="choice1">Choice 1</string>
+    <string name="choice2">Choice 2</string>
+    <string name="choice3">Choice 3</string>
+    <string name="nextBtn">Next</string>
+
+</resources>
