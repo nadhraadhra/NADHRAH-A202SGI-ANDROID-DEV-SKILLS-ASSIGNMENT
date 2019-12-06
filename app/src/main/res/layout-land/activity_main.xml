@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
+    android:gravity="center"
     android:padding="16dp"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="78dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="50dp"
         android:padding="5dp"
         android:text="@string/MainTitle"
         android:textColor="@android:color/white"

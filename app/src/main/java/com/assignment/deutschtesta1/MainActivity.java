@@ -14,19 +14,19 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_TEST = 1;
 
     public static final String SHARED_PREFERENCE = "sharedPreference";
-    public static final String KEY_HIGHSCORE = "keyHighscore";
+    public static final String KEY_HIGHSCORE = "keyHighScore";
 
-    private TextView textViewHighscore;
+    private TextView textViewHighScore;
 
-    private int highscore;
+    private int highScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewHighscore = findViewById(R.id.textViewHighscore);
-        loadHighscore();
+        textViewHighScore = findViewById(R.id.textViewHighScore);
+        loadHighScore();
 
         Button buttonStartTest = findViewById(R.id.button_start_test);
         buttonStartTest.setOnClickListener(new View.OnClickListener() {
@@ -49,28 +49,30 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_TEST) {
             if (resultCode == RESULT_OK) {
                 int score = data.getIntExtra(TestActivity.ADDITIONAL_SCORE, 0);
-                if (score > highscore) {
-                    updateHighscore(score);
+                //If new score is higher than current highscore only it will rewrite and record new score
+                if (score > highScore) {
+                    updateHighScore(score);
                 }
             }
         }
     }
 
-    private void loadHighscore() {
+    private void loadHighScore() {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
-        highscore = preferences.getInt(KEY_HIGHSCORE, 0);
-        textViewHighscore.setText("Highscore: " + highscore);
+        highScore = preferences.getInt(KEY_HIGHSCORE, 0);
+        textViewHighScore.setText("Highscore: " + highScore);
 
 
     }
 
-    private void updateHighscore(int highscoreNew) {
-        highscore = highscoreNew;
-        textViewHighscore.setText("Highscore: " + highscore);
+    //update current score to new score when current score is high than previous score. else maintain the previous record
+    private void updateHighScore(int highScoreNew) {
+        highScore = highScoreNew;
+        textViewHighScore.setText("Highscore: " + highScore);
 
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(KEY_HIGHSCORE,highscore);
+        editor.putInt(KEY_HIGHSCORE,highScore);
         editor.apply();
 
     }

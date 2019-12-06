@@ -15,5 +15,6 @@ public final class TestContract {
         public static final String COLUMN_CHOICE2 = "choice2";
         public static final String COLUMN_CHOICE3 = "choice3";
         public static final String COLUMN_ANSWER_NUM = "answer_num";
+
     }
 }
