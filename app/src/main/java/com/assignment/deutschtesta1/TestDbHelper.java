@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TestDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "DeutschTestA1.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private SQLiteDatabase db;
 
@@ -37,7 +37,8 @@ public class TestDbHelper extends SQLiteOpenHelper {
                 QuestionsTable.COLUMN_CHOICE1 + " TEXT, " +
                 QuestionsTable.COLUMN_CHOICE2 + " TEXT, " +
                 QuestionsTable.COLUMN_CHOICE3 + " TEXT, " +
-                QuestionsTable.COLUMN_ANSWER_NUM + " INTEGER" +
+                QuestionsTable.COLUMN_ANSWER_NUM + " INTEGER, " +
+                QuestionsTable.COLUMN_LEVEL + " TEXT" +
                 ")";
 
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
@@ -52,28 +53,28 @@ public class TestDbHelper extends SQLiteOpenHelper {
 
     }
 
-    //Question , Choice 1, Choice2 , Choice3, Answer of the question
+    //Question , Choice 1, Choice2 , Choice3, Answer of the question, Test Level
 
     private void fillQuestionsTable() {
-        Question q1 = new Question("Im Winter ist es __________", "frostig", "froh", "Schnee", 1);
+        Question q1 = new Question("Im Winter ist es __________", "frostig", "froh", "Schnee", 1, Question.LEVEL_A2);
         addQuestion(q1);
-        Question q2 = new Question("Woher kommen Sie? - Ich komme_____Malaysia.", "von", "aus", "nach", 2);
+        Question q2 = new Question("Woher kommen Sie? - Ich komme_____Malaysia.", "von", "aus", "nach", 2,Question.LEVEL_A1);
         addQuestion(q2);
-        Question q3 = new Question("Adrian, ist das dein Auto - Ja, das ist ______ Auto.", "mein", "unsere", "ihr", 1);
+        Question q3 = new Question("Adrian, ist das dein Auto - Ja, das ist ______ Auto.", "mein", "unsere", "ihr", 1, Question.LEVEL_B2);
         addQuestion(q3);
-        Question q4 = new Question("Ich esse Pizza am liebsten", "Ich macht Pizza nicht.", "Ich esse Pizza nicht gern.", "Ich esse Pizza sehr gern.", 3);
+        Question q4 = new Question("Ich esse Pizza am liebsten", "Ich macht Pizza nicht.", "Ich esse Pizza nicht gern.", "Ich esse Pizza sehr gern.", 3, Question.LEVEL_C1);
         addQuestion(q4);
-        Question q5 = new Question("____ Orangensaft schmeckt____Gästen gar nicht.", "Der/den", "Der/die", "Den/die", 1);
+        Question q5 = new Question("____ Orangensaft schmeckt____Gästen gar nicht.", "Der/den", "Der/die", "Den/die", 1, Question.LEVEL_A1);
         addQuestion(q5);
-        Question q6 = new Question("Ich habe ____ Fieber.", "eine", "ein", "-", 3);
+        Question q6 = new Question("Ich habe ____ Fieber.", "eine", "ein", "-", 3, Question.LEVEL_A1);
         addQuestion(q6);
-        Question q7 = new Question("_____ ruhig!", "sein", "sei", "bist", 2);
+        Question q7 = new Question("_____ ruhig!", "sein", "sei", "bist", 2, Question.LEVEL_A1);
         addQuestion(q7);
-        Question q8 = new Question("Um wie viel Uhr bist du________?", "eingeschlafen", "schlafen ein", "eingeschlaft", 1);
+        Question q8 = new Question("Um wie viel Uhr bist du________?", "eingeschlafen", "schlafen ein", "eingeschlaft", 1,Question.LEVEL_B1);
         addQuestion(q8);
-        Question q9 = new Question("Gestern bin ich in den Park _________", "gehe", "gegangen", "gegeht",2);
+        Question q9 = new Question("Gestern bin ich in den Park _________", "gehe", "gegangen", "gegeht",2 , Question.LEVEL_A1);
         addQuestion(q9);
-        Question q10 = new Question("Die Tochter meiner Schwester ist meine __________", "Neffe", "Einkelin", "Nichte", 3);
+        Question q10 = new Question("Die Tochter meiner Schwester ist meine __________", "Neffe", "Einkelin", "Nichte", 3 ,Question.LEVEL_C2);
         addQuestion(q10);
     }
 
@@ -84,6 +85,7 @@ public class TestDbHelper extends SQLiteOpenHelper {
         cv.put(QuestionsTable.COLUMN_CHOICE2,question.getChoice2());
         cv.put(QuestionsTable.COLUMN_CHOICE3,question.getChoice3());
         cv.put(QuestionsTable.COLUMN_ANSWER_NUM,question.getAnswerNum());
+        cv.put(QuestionsTable.COLUMN_LEVEL,question.getLevel());
         db.insert(QuestionsTable.TABLE_NAME,null,cv);
     }
 
@@ -102,6 +104,34 @@ public class TestDbHelper extends SQLiteOpenHelper {
                 question.setChoice2(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_CHOICE2)));
                 question.setChoice3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_CHOICE3)));
                 question.setAnswerNum(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWER_NUM)));
+                question.setLevel(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_LEVEL)));
+                questionList.add(question);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return questionList;
+    }
+
+    //Retrieve Database To get questions depends on the chosen level
+
+    public ArrayList<Question>getQuestions(String level) {
+        ArrayList<Question> questionList = new ArrayList<>();
+        db = getReadableDatabase();
+
+        String[] selectionArgs = new String[]{level};
+        Cursor c = db.rawQuery("SELECT * FROM " + QuestionsTable.TABLE_NAME +
+                " WHERE " + QuestionsTable.COLUMN_LEVEL + " = ?", selectionArgs);
+
+        if (c.moveToFirst()) {
+            do {
+                Question question = new Question();
+                question.setQuestion(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_QUESTION)));
+                question.setChoice1(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_CHOICE1)));
+                question.setChoice2(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_CHOICE2)));
+                question.setChoice3(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_CHOICE3)));
+                question.setAnswerNum(c.getInt(c.getColumnIndex(QuestionsTable.COLUMN_ANSWER_NUM)));
+                question.setLevel(c.getString(c.getColumnIndex(QuestionsTable.COLUMN_LEVEL)));
                 questionList.add(question);
             } while (c.moveToNext());
         }

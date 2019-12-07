@@ -15,16 +15,26 @@
         android:layout_height="wrap_content"
         android:text="@string/QuestionTotal"
         android:textSize="18sp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:freezesText="true"/>
+
+    <TextView
+        android:id="@+id/text_view_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:freezesText="true"
+        android:text="@string/level"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewScoreTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scoreView"
-        android:layout_marginTop="20dp"
         android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:freezesText="true"/>
 
     <TextView
         android:id="@+id/text_view_question"
@@ -34,7 +44,8 @@
         android:text="@string/Question"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:freezesText="true"/>
 
     <TextView
         android:id="@+id/text_view_timer"
@@ -42,7 +53,8 @@
         android:layout_height="wrap_content"
         android:text="@string/timerLabel"
         android:textColor="@android:color/white"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:freezesText="true"/>
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -51,6 +63,7 @@
         android:layout_gravity="center_horizontal"
         android:buttonTint="@android:color/holo_red_light"
         android:orientation="vertical"
+        android:freezesText="true"
         tools:targetApi="lollipop">
 
         <RadioButton
@@ -63,6 +76,7 @@
             android:text="@string/choice1"
             android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:freezesText="true"
             tools:targetApi="lollipop" />
 
         <RadioButton
@@ -75,6 +89,7 @@
             android:text="@string/choice2"
             android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:freezesText="true"
             tools:targetApi="lollipop" />
 
 
@@ -88,6 +103,7 @@
             android:text="@string/choice3"
             android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:freezesText="true"
             tools:targetApi="lollipop" />
     </RadioGroup>
 
@@ -97,10 +113,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="@android:color/holo_red_dark"
-        android:layout_marginTop="15dp"
-        android:drawablePadding="4dp"
+        android:drawablePadding="2dp"
         android:text="@string/nextBtn"
         android:textColor="@android:color/white"
+        android:freezesText="true"
         tools:targetApi="lollipop" />
 
 </LinearLayout>

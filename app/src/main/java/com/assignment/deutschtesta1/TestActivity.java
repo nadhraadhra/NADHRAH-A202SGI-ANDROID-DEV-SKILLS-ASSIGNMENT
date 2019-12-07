@@ -36,6 +36,7 @@ public class TestActivity extends AppCompatActivity {
     private TextView textViewQuestion;
     private TextView textViewScoreTest;
     private TextView textViewQuestionCount;
+    private TextView textViewLevel;
     private TextView textViewTimer;
     private RadioGroup rbGroup;
     private RadioButton rbtn1;
@@ -71,6 +72,7 @@ public class TestActivity extends AppCompatActivity {
         textViewQuestion = findViewById(R.id.text_view_question);
         textViewScoreTest = findViewById(R.id.textViewScoreTest);
         textViewQuestionCount = findViewById(R.id.text_view_question_count);
+        textViewLevel = findViewById(R.id.text_view_level);
         textViewTimer = findViewById(R.id.text_view_timer);
         rbGroup = findViewById(R.id.radioGroup);
         rbtn1 = findViewById(R.id.radio_ansButton1);
@@ -84,10 +86,16 @@ public class TestActivity extends AppCompatActivity {
         //text Color for timer
         textColourDefaultTimer = textViewTimer.getTextColors();
 
+        Intent intent = getIntent();
+        String level = intent.getStringExtra(MainActivity.ADDITIONAL_LEVEL);
+
+        textViewLevel.setText("Test Level: " + level);
+
         if (savedInstanceState == null) {
 
             TestDbHelper dbHelper = new TestDbHelper(this);
-            questionList = dbHelper.getAllQuestions();
+            //questionList = dbHelper.getAllQuestions();
+            questionList = dbHelper.getQuestions(level);
             questionCountTotal = questionList.size();
             Collections.shuffle(questionList);
 
@@ -137,6 +145,8 @@ public class TestActivity extends AppCompatActivity {
         rbtn3.setTextColor(textColorDefaultRb);
         rbGroup.clearCheck();
 
+
+
         if (questionCounter < questionCountTotal) {
             currentQuestion = questionList.get(questionCounter);
 
@@ -154,7 +164,7 @@ public class TestActivity extends AppCompatActivity {
             startTimer();
 
         } else {
-            finishTest();
+            finishTest();      //Validation  Part
         }
     }
 

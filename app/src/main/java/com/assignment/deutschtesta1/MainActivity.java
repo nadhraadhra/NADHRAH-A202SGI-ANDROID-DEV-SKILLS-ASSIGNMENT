@@ -7,16 +7,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_TEST = 1;
+    public static final String ADDITIONAL_LEVEL = "additionalLevel";
 
     public static final String SHARED_PREFERENCE = "sharedPreference";
     public static final String KEY_HIGHSCORE = "keyHighScore";
 
     private TextView textViewHighScore;
+    private Spinner spinnerLevel;
 
     private int highScore;
 
@@ -26,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textViewHighScore = findViewById(R.id.textViewHighScore);
+        spinnerLevel = findViewById(R.id.spinner_level);
+
+        String[] testLevels = Question.getAllLevels();
+
+        ArrayAdapter<String> adapterLevel = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, testLevels);
+        adapterLevel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLevel.setAdapter(adapterLevel);
+
         loadHighScore();
 
         Button buttonStartTest = findViewById(R.id.button_start_test);
@@ -38,7 +51,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startTest() {
+        String level = spinnerLevel.getSelectedItem().toString();
+
         Intent intent = new Intent(MainActivity.this, TestActivity.class);
+        intent.putExtra(ADDITIONAL_LEVEL, level);
         startActivityForResult(intent, REQUEST_CODE_TEST);
     }
 
